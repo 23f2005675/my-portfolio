@@ -1,1 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chinmay Mehta – Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f5f0e8;
+      --ink: #1a1208;
+      --accent: #c8511a;
+      --muted: #7a6f60;
+      --card: #ede8de;
+      --border: #d6cfc3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* ── NAV DOTS ── */
+    nav {
+      display: flex;
+      gap: 28px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.7s ease both;
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    /* ── ABOUT ── */
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 1.05rem;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .skill-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      transition: background 0.2s;
+    }
+
+    .skill-tag:hover { background: var(--border); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 30px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(26,18,8,0.08);
+    }
+
+    .project-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .project-card p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(200,81,26,0.08);
+      border-radius: 3px;
+      padding: 3px 9px;
+      font-weight: 500;
+    }
+
+    /* ── CONTACT ── */
+    .contact-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 36px;
+    }
+
+    .contact-block p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .contact-item .label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+    }
+
+    .contact-item a, .contact-item span {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-item a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0 48px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section:nth-child(1) { animation-delay: 0.1s; }
+    section:nth-child(2) { animation-delay: 0.2s; }
+    section:nth-child(3) { animation-delay: 0.3s; }
+    section:nth-child(4) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <p class="eyebrow">Portfolio</p>
+    <h1>Chinmay<br><em>Mehta</em></h1>
+    <p class="tagline">Data Science student at IIT Madras, building things with data, code, and curiosity.</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About Me</p>
+    <div class="about-text">
+      <p>
+        I'm a passionate Data Science student enrolled in the BS programme at IIT Madras.
+        I love turning raw data into meaningful insights and building solutions that make
+        a real difference.
+      </p>
+      <p>
+        When I'm not working through datasets, I enjoy exploring open-source tools,
+        tinkering with machine learning models, and continuously pushing my understanding
+        of mathematics and statistics.
+      </p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Skills</p>
+    <div class="skills-grid">
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">Pandas</span>
+      <span class="skill-tag">NumPy</span>
+      <span class="skill-tag">Scikit-learn</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">Data Visualisation</span>
+      <span class="skill-tag">Machine Learning</span>
+      <span class="skill-tag">Statistics</span>
+      <span class="skill-tag">Jupyter</span>
+      <span class="skill-tag">Git & GitHub</span>
+      <span class="skill-tag">HTML & CSS</span>
+      <span class="skill-tag">Linux</span>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <div class="projects-grid">
+
+      <a href="#" class="project-card">
+        <h3>Project One</h3>
+        <p>
+          A short description of what this project does, the problem it solves,
+          and what you learned while building it. Keep it punchy and outcome-focused.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Pandas</span>
+          <span class="project-tag">Machine Learning</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <h3>Project Two</h3>
+        <p>
+          Another project description — what data you used, what the result was,
+          and why it matters. Link this to the actual repo or live demo when ready.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">SQL</span>
+          <span class="project-tag">Data Visualisation</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <h3>Project Three</h3>
+        <p>
+          Describe your third project here. Don't be shy about small or academic
+          projects — they all demonstrate that you ship and finish things.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">Scikit-learn</span>
+          <span class="project-tag">Statistics</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-block">
+      <p>I'm always open to interesting conversations, collaborations, or opportunities. Feel free to reach out.</p>
+      <div class="contact-links">
+
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <span><!--email_off-->23f2005675@ds.study.iitm.ac.in<!--/email_off--></span>
+        </div>
+
+        <div class="contact-item">
+          <span class="label">GitHub</span>
+          <a href="https://github.com/your-username" target="_blank" rel="noopener">github.com/your-username</a>
+        </div>
+
+        <div class="contact-item">
+          <span class="label">LinkedIn</span>
+          <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener">linkedin.com/in/your-profile</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2025 Chinmay Mehta · Built with HTML & CSS · Hosted on GitHub Pages</p>
+</footer>
+
+</body>
+</html>
